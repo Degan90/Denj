@@ -41,6 +41,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
     'users',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'denj',
+    'location_field',
+    'django.contrib.gis'
+    
 ]
 
 MIDDLEWARE = [
@@ -55,6 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'django_denj.urls'
+
 
 TEMPLATES = [
     {
@@ -79,8 +86,8 @@ WSGI_APPLICATION = 'django_denj.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-  'default': dj_database_url.config(conn_max_age=600)
-}
+  'default': dj_database_url.config(conn_max_age=600),}
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -126,3 +133,66 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # What we'll use for our API
+        'rest_framework.authentication.TokenAuthentication',
+        # What we'll use for the browseable API
+        'rest_framework.authentication.SessionAuthentication',
+        # Basic Authentication should be removed in production
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
+AUTH_USER_MODEL = 'users.User'
+
+
+DJOSER = {
+    'LOGIN_FIELD': 'name',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
+        'user': 'users.serializers.UserCreateSerializer'
+    }
+}
+# GDAL_LIBRARY_PATH = r'C:\Python37\Lib\site-packages\osgeo\gdal204.dll' 
+# os.environ['PATH'] = r"C:\Python37\Lib\site-packages\osgeo" +";" + os.environ['PATH']
+# GDAL_LIBRARY_PATH = '/home/sue/local/lib/libgdal.so'
+from django.conf import settings
+
+LOCATION_FIELD_PATH = settings.STATIC_URL + 'location_field'
+
+LOCATION_FIELD = {
+    'map.provider': 'google',
+    'map.zoom': 13,
+
+    'search.provider': 'google',
+    'search.suffix': '',
+
+    # Google
+    'provider.google.api': '//maps.google.com/maps/api/js',
+    'provider.google.api_key': '',
+    'provider.google.map_type': 'ROADMAP',
+
+    # Mapbox
+    'provider.mapbox.access_token': '',
+    'provider.mapbox.max_zoom': 18,
+    'provider.mapbox.id': 'mapbox.streets',
+
+    # OpenStreetMap
+    'provider.openstreetmap.max_zoom': 18,
+
+    # misc
+    'resources.root_path': LOCATION_FIELD_PATH,
+    'resources.media': {
+        'js': [
+            LOCATION_FIELD_PATH + '/js/form.js',
+        ],
+    },
+}
