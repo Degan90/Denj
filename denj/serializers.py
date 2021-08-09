@@ -5,9 +5,6 @@ class ReviewSerializer(serializers.HyperlinkedModelSerializer):
     denj = serializers.HyperlinkedRelatedField(
         view_name='denj_detail', read_only=True)
 
-    denj_id = serializers.PrimaryKeyRelatedField(
-        queryset=Denj.objects.all(), source='denj')
-
     denj_name = serializers.SlugRelatedField(
         queryset=Denj.objects.all(), slug_field='name', source='denj')
 
@@ -15,8 +12,8 @@ class ReviewSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'denj', 'denj_id', 'title',
-                  'body','image', 'created', 'denj_name', 'discoverer')
+        fields = ('denj_name','id', 'denj', 'title',
+                  'body','image', 'created',  'discoverer')
 
 
 

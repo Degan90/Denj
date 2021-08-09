@@ -1,8 +1,4 @@
 from django.db import models
-from django.contrib.gis.geos import Point
-from location_field.models.spatial import LocationField
-from django.contrib.auth.models import User
-
 
 # Create your models here.
 
@@ -11,7 +7,7 @@ class Denj(models.Model):
     category = models.CharField(max_length=100)
     caption = models.CharField(max_length=100)
     image = models.ImageField(upload_to='images/')
-    location = LocationField(based_fields=['city'], zoom=7, default=Point(1.0, 1.0))
+    location = models.CharField(max_length=100)
     state = models.CharField(max_length=50)
     gears = models.CharField(max_length=100)
     # likes = models.ManyToManyField(User, related_name='denj_like')

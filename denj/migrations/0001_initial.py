@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('category', models.CharField(max_length=100)),
                 ('caption', models.CharField(max_length=100)),
                 ('image', models.ImageField(upload_to='images/')),
-                ('location', location_field.models.spatial.LocationField(default=django.contrib.gis.geos.point.Point(1.0, 1.0), srid=4326)),
+                ('location', models.CharField(max_length=100)),
                 ('state', models.CharField(max_length=50)),
                 ('gears', models.CharField(max_length=100)),
                 ('created', models.DateTimeField(auto_now_add=True)),

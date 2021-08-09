@@ -9,4 +9,4 @@ class IsDiscovererOrReadOnly(permissions.BasePermission):
             return True
 
 
-        return obj.owner == request.user
+        return obj.discoverer == request.user

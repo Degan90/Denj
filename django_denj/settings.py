@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import dj_database_url
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,14 +44,12 @@ INSTALLED_APPS = [
     'users',
     'rest_framework',
     'rest_framework.authtoken',
-    'denj',
-    'location_field',
-    'django.contrib.gis'
-    
+    'denj',  
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,10 +84,7 @@ WSGI_APPLICATION = 'django_denj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-  'default': dj_database_url.config(conn_max_age=600),}
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-
+DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -126,6 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT=os.path.join(BASE_DIR, "static/")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -161,38 +158,7 @@ DJOSER = {
         'user': 'users.serializers.UserCreateSerializer'
     }
 }
-# GDAL_LIBRARY_PATH = r'C:\Python37\Lib\site-packages\osgeo\gdal204.dll' 
-# os.environ['PATH'] = r"C:\Python37\Lib\site-packages\osgeo" +";" + os.environ['PATH']
-# GDAL_LIBRARY_PATH = '/home/sue/local/lib/libgdal.so'
-from django.conf import settings
 
-LOCATION_FIELD_PATH = settings.STATIC_URL + 'location_field'
+MEDIA_URL = '/media/'
 
-LOCATION_FIELD = {
-    'map.provider': 'google',
-    'map.zoom': 13,
-
-    'search.provider': 'google',
-    'search.suffix': '',
-
-    # Google
-    'provider.google.api': '//maps.google.com/maps/api/js',
-    'provider.google.api_key': '',
-    'provider.google.map_type': 'ROADMAP',
-
-    # Mapbox
-    'provider.mapbox.access_token': '',
-    'provider.mapbox.max_zoom': 18,
-    'provider.mapbox.id': 'mapbox.streets',
-
-    # OpenStreetMap
-    'provider.openstreetmap.max_zoom': 18,
-
-    # misc
-    'resources.root_path': LOCATION_FIELD_PATH,
-    'resources.media': {
-        'js': [
-            LOCATION_FIELD_PATH + '/js/form.js',
-        ],
-    },
-}
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/") 
