@@ -30,5 +30,5 @@ class DenjSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Denj
         fields = ('id', 'name', 'category', 'reviews',
-                  'Denj_url', 'discoverer','location','state','gears'
+                  'Denj_url', 'discoverer','state','gears'
                   ,'caption','created','image')
