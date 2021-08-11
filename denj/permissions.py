@@ -1,12 +1,12 @@
-from rest_framework import permissions
+# from rest_framework import permissions
 
 
-class IsDiscovererOrReadOnly(permissions.BasePermission):
+# class IsDiscovererOrReadOnly(permissions.BasePermission):
   
-    def has_object_permission(self, request, view, obj):
+#     def has_object_permission(self, request, view, obj):
       
-        if request.method in permissions.SAFE_METHODS:
-            return True
+#         if request.method in permissions.SAFE_METHODS:
+#             return True
 
 
-        return obj.discoverer == request.user
+#         return obj.discoverer == request.user

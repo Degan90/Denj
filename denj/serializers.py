@@ -8,12 +8,12 @@ class ReviewSerializer(serializers.HyperlinkedModelSerializer):
     denj_name = serializers.SlugRelatedField(
         queryset=Denj.objects.all(), slug_field='name', source='denj')
 
-    discoverer = serializers.ReadOnlyField(source='discoverer.username')
+    # discoverer = serializers.ReadOnlyField(source='discoverer.username')
 
     class Meta:
         model = Review
         fields = ('denj_name','id', 'denj', 'title',
-                  'body','image', 'created',  'discoverer')
+                  'body','image', 'created')
 
 
 
@@ -25,10 +25,11 @@ class DenjSerializer(serializers.HyperlinkedModelSerializer):
 
     Denj_url = serializers.ModelSerializer.serializer_url_field(
         view_name='denj_detail')
-    discoverer = serializers.ReadOnlyField(source='discoverer.username')
+    # discoverer = serializers.ReadOnlyField(source='discoverer.username')
 
     class Meta:
         model = Denj
         fields = ('id', 'name', 'category', 'reviews',
-                  'Denj_url', 'discoverer','state','gears'
+                  'Denj_url'
+                  ,'state','gears'
                   ,'caption','created','image')
