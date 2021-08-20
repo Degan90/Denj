@@ -9,7 +9,7 @@ class Denj(models.Model):
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     caption = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='images/',null=True)
+    image = models.ImageField(upload_to='images/',null=True , blank=True )
     # location = models.CharField(max_length=100)
     state = models.CharField(max_length=50)
     gears = models.CharField(max_length=100)
